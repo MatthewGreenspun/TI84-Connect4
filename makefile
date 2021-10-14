@@ -2,9 +2,8 @@
 # Makefile Options
 # ----------------------------
 
-NAME = DEMO
-ICON = icon.png
-DESCRIPTION = "CE C Toolchain Demo"
+NAME = CONNECT4
+DESCRIPTION = "Connect 4 game for TI-84 pluc CE"
 COMPRESSED = NO
 ARCHIVED = NO
 
