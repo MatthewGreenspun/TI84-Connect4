@@ -1,2 +1,2 @@
 ../../bin/make.exe
-CEmu -s ../../bin/clibs.8xg -s bin/DEMO.8xp --launch DEMO
+CEmu -s ../../bin/clibs.8xg -s bin/CONNECT4.8xp --launch CONNECT4 
