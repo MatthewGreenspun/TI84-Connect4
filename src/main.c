@@ -3,29 +3,28 @@
 #include <keypadc.h>
 #include "connect4.h"
 
-board_t board;
-void boardInit(void){
-	board.selectedCol = 4;
+void boardInit(board_t* b){
+	b->selectedCol = 3;
 	uint8_t row;
 	for(row = 0; row < 6; ++row){
 		uint8_t col;
 		for(col = 0; col < 7; ++col){
-			board.gameState[row][col] = EMPTY;
+			b->gameState[row][col] = EMPTY;
 		}
 	}
 }
 
-void drawBoard(void){
+void drawBoardBackground(void){
 	gfx_SetColor(BOARD_BG_CLR);
-	gfx_FillRectangle_NoClip(0, 0, 300, 210);
+	gfx_FillRectangle_NoClip(0, 0, BOARD_WIDTH, BOARD_HEIGHT);
 }
 
-void drawPieces(void){
+void drawPieces(board_t* b){
 	uint8_t row;
 	for(row = 0; row < 6; ++row){
 		uint8_t col;
 		for(col = 0; col < 7; ++col){
-			gfx_SetColor(board.gameState[row][col]);
+			gfx_SetColor(b->gameState[row][col]);
 			uint16_t x = (BOARD_WIDTH/7)*col + BOARD_WIDTH/14;
 			uint16_t y = (BOARD_HEIGHT/6)*row + BOARD_WIDTH/14;
 			gfx_FillCircle_NoClip(x, y, 10);
@@ -33,21 +32,22 @@ void drawPieces(void){
 	}
 }
 
-void drawSelectedCol(void){
+void drawSelectedCol(board_t* b){
 	gfx_SetColor(SELECTED_COL_CLR);
-	gfx_FillRectangle_NoClip(board.selectedCol*(BOARD_WIDTH/7) + 5, 0, BOARD_HEIGHT/7, 210);
+	gfx_FillRectangle_NoClip(b->selectedCol*(BOARD_WIDTH/7) + 5, 0, BOARD_HEIGHT/7, 210);
 }
 
 int main(void){
-	boardInit();
+	board_t board;
+	boardInit(&board);
 
 	//screen is 320 wide x 240 high
 
 	gfx_Begin();
 
-	drawBoard(); 
-	drawSelectedCol();
-	drawPieces();
+	drawBoardBackground(); 
+	drawSelectedCol(&board);
+	drawPieces(&board);
 
 	do {
 		kb_key_t key;
@@ -60,16 +60,16 @@ int main(void){
 		{
 				case kb_Right:     
 						board.selectedCol = (board.selectedCol + 1) % 7;
-						drawBoard();
-						drawSelectedCol();
-						drawPieces();
+						drawBoardBackground();
+						drawSelectedCol(&board);
+						drawPieces(&board);
 						delay(200);
 						break;
 				case kb_Left:           /* Change screen color to a different red */
 						board.selectedCol = board.selectedCol == 0? 6 : (board.selectedCol - 1) % 7;
-						drawBoard();
-						drawSelectedCol();
-						drawPieces();
+						drawBoardBackground();
+						drawSelectedCol(&board);
+						drawPieces(&board);
 						delay(200);
 						break;
 				default:

@@ -19,10 +19,10 @@ typedef struct board_t {
 	uint8_t selectedCol;
 } board_t;
 
-void boardInit(void);
-void drawBoard(void);
-void drawPieces(void);
-void drawSelectedCol(void);
+void boardInit(board_t* b);
+void drawBoardBackground(void);
+void drawPieces(board_t* b);
+void drawSelectedCol(board_t* b);
 
 
 
