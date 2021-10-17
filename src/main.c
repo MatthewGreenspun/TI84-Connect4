@@ -24,8 +24,8 @@ int main(void){
 	drawSelectedCol(&board);
 	drawPieces(&board);
 
+	delay(1000);
 	do {
-		delay(1000);
 		kb_Scan();
 
 		if(kb_Data[7] == kb_Right){
@@ -44,20 +44,21 @@ int main(void){
 
 		if(kb_Data[6] == kb_Enter){
 			bool moved = addPiece(&board, board.selectedCol, isRedsTurn? RED_PIECE : YELLOW_PIECE);
-			drawBoardBackground();
-			drawSelectedCol(&board);
-			drawPieces(&board);
-			if(moved && isRedsTurn){
-				isRedsTurn = false;
-				gfx_SetTextFGColor(YELLOW);		
-				gfx_PrintStringXY(yellowsTurnStr, BOARD_OFFSET, BOARD_HEIGHT + 5);
+			if(moved){
+				drawBoardBackground();
+				drawSelectedCol(&board);
+				drawPieces(&board);
+				if(isRedsTurn){
+					isRedsTurn = false;
+					gfx_SetTextFGColor(YELLOW);		
+					gfx_PrintStringXY(yellowsTurnStr, BOARD_OFFSET, BOARD_HEIGHT + 5);
+				} else {
+					isRedsTurn = true;
+					gfx_SetColor(BLACK);
+					gfx_FillRectangle_NoClip(BOARD_OFFSET, BOARD_HEIGHT + 5, BOARD_WIDTH, 10);
+					gfx_SetTextFGColor(RED);		
+					gfx_PrintStringXY(redsTurnStr, BOARD_OFFSET, BOARD_HEIGHT + 5);
 			}
-			else if(moved){
-				isRedsTurn = true;
-				gfx_SetColor(BLACK);
-				gfx_FillRectangle_NoClip(BOARD_OFFSET, BOARD_HEIGHT + 5, BOARD_WIDTH, 10);
-				gfx_SetTextFGColor(RED);		
-				gfx_PrintStringXY(redsTurnStr, BOARD_OFFSET, BOARD_HEIGHT + 5);
 			}
 			delay(500);
 		}
