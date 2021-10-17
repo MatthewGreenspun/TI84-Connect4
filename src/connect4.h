@@ -4,7 +4,9 @@
 #define BOARD_WIDTH 300
 #define BOARD_HEIGHT 210
 #define BOARD_OFFSET 10
+
 #define WHITE 255
+#define BLACK 0
 #define RED 224
 #define YELLOW 231
 #define BLUE 26
